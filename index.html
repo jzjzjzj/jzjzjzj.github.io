@@ -15,7 +15,7 @@
       let received = []
 
       // Override `receive` method to handle incoming data as you want.
-      terminal.receive = function(data, a) {
+      terminal.receive = function(data) {
         let result = ''
 
         // alert(data);
@@ -27,7 +27,7 @@
         let a = document.getElementById('received')
 console.log('AAA', a)
         document.getElementById('received').innerHTML = result
-console.log(data, a)
+console.log(data)
       };
 
       function connect() {
