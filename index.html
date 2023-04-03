@@ -16,12 +16,13 @@
 
       // Override `receive` method to handle incoming data as you want.
       terminal.receive = function(data) {
+        let ms = (new Date()).getMilliseconds()
         let result = ''
 
         received.unshift(data)
-        if(received.length > 10) received.pop()
+        if(received.length > 30) received.pop()
 
-        received.forEach(d => result += `<div>${d}</div>`)
+        received.forEach(d => result += `<div><b>${d}</b> <i>(${ms})</i></div>`)
         document.getElementById('received').innerHTML = result
       };
 
