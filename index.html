@@ -19,10 +19,10 @@
         let ms = (new Date()).getMilliseconds()
         let result = ''
 
-        received.unshift(data)
+        received.unshift({data: data, ms: ms})
         if(received.length > 30) received.pop()
 
-        received.forEach(d => result += `<div><b>${d}</b> <i>(${ms})</i></div>`)
+        received.forEach(d => result += `<div><b>${d.data}</b> <i>(${d.ms})</i></div>`)
         document.getElementById('received').innerHTML = result
       };
 
