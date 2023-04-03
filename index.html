@@ -3,39 +3,47 @@
     <script src="BluetoothTerminal.js"></script>
   </head>
   <body>
+    <input type="button" value="connect" onclick="connect()">
+    <input type="button" value="send" onclick="send()">
+    <input type="button" value="disconnect" onclick="disconnect()">
+
+    <div id="received"></div>
+
     <script>
       // Obtain configured instance.
       let terminal = new BluetoothTerminal();
-let received=[]
+      let received = []
 
       // Override `receive` method to handle incoming data as you want.
-      terminal.receive = function(data) {
-        //alert(data);
-received.shift(data)
-if(received.length>10) received.pop()
-let result = ''
-received.forEach(d => result+=`<div>${d}</div>`)
-document.getElementById('received').innerHTML = result
-console.log(data)
+      terminal.receive = function(data, a) {
+        let result = ''
+
+        // alert(data);
+        received.shift(data)
+
+        if(received.length>10) received.pop()
+
+        received.forEach(d => result+=`<div>${d}</div>`)
+        document.getElementById('received').innerHTML = result
+console.log(data, a)
       };
-function connect() {
-      // Request the device for connection and get its name after successful connection.
-      terminal.connect().then(() => {
-        alert(terminal.getDeviceName() + ' is connected!');
-      });
-}
-function send() {
-      // Send something to the connected device.
-      terminal.send('Simon says: Hello, world!');
-}
-function disconnect() {
-      // Disconnect from the connected device.
-      terminal.disconnect();
-}
+
+      function connect() {
+        // Request the device for connection and get its name after successful connection.
+        terminal.connect().then(() => {
+          alert(terminal.getDeviceName() + ' is connected!');
+        });
+      }
+
+      function send() {
+        // Send something to the connected device.
+        terminal.send('Simon says: Hello, world!');
+      }
+
+      function disconnect() {
+        // Disconnect from the connected device.
+        terminal.disconnect();
+      }
     </script>
-<input type="button" value="connect" onclick="connect()">
-<input type="button" value="send" onclick="send()">
-<input type="button" value="disconnect" onclick="disconnect()">
-<div id="received"></div>
   </body>
 </html>
