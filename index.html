@@ -16,13 +16,15 @@
 
       // Override `receive` method to handle incoming data as you want.
       terminal.receive = function(data) {
-        let ms = (new Date()).getMilliseconds()
+        let d = new Date()
+        let s = d.getSeconds().toString().padStart(2, '0')
+        let ms = d.getMilliseconds().toString().padStart(3, '0')
         let result = ''
 
-        received.unshift({data: data, ms: ms})
+        received.unshift({data: data, s: s, ms: ms})
         if(received.length > 30) received.pop()
 
-        received.forEach(d => result += `<div><i>${d.ms.toString().padStart(3, '0')}</i> | <b>${d.data}</b></div>`)
+        received.forEach(d => result += `<div><i>:${d.s}.${d.ms}</i> | <b>${d.data}</b></div>`)
         document.getElementById('received').innerHTML = result
       };
 
