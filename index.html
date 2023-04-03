@@ -22,7 +22,7 @@
         received.unshift({data: data, ms: ms})
         if(received.length > 30) received.pop()
 
-        received.forEach(d => result += `<div><b>${d.data}</b> <i>(${d.ms})</i></div>`)
+        received.forEach(d => result += `<div><i>${d.ms.toString().padStart(3, '0')}</i> | <b>${d.data}</b></div>`)
         document.getElementById('received').innerHTML = result
       };
 
