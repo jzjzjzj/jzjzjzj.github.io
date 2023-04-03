@@ -16,6 +16,7 @@ if(received.length>10) received.pop()
 let result = ''
 received.forEach(d => result+=`<div>${d}</div>`)
 document.getElementById('received').innerHTML = result
+console.log(data)
       };
 function connect() {
       // Request the device for connection and get its name after successful connection.
