@@ -24,6 +24,8 @@
         if(received.length>10) received.pop()
 
         received.forEach(d => result+=`<div>${d}</div>`)
+        let a = document.getElementById('received')
+console.log('AAA', a)
         document.getElementById('received').innerHTML = result
 console.log(data, a)
       };
