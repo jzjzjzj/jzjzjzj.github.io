@@ -89,7 +89,15 @@
           var scale = view.size.width / 2.25;
           // leftBands.unshift(Math.floor(Math.random() * 100)/100)
           // rightBands.unshift(Math.floor(Math.random() * 100)/100)
-          (window.data < 0 ? leftBands : rightBands).unshift(window.data/100)
+          if (window.data < 0) {
+            leftBands.unshift(window.data/100)
+            rightBands.unshift(0)
+          }
+          else {
+            leftBands.unshift(0)
+            rightBands.unshift(window.data/100)
+          }
+
           (window.data < 0 ? rightBands : leftBands).unshift(0)
           if(leftBands.length > amount+6) {leftBands.pop();}
           if(rightBands.length > amount+1) rightBands.pop()
@@ -114,7 +122,7 @@
       // Obtain configured instance.
       let terminal = new BluetoothTerminal();
       let received = []
-
+window.data = 0;
       // Override `receive` method to handle incoming data as you want.
       terminal.receive = function(data) {
         let d = new Date()
