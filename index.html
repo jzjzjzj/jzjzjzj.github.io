@@ -33,6 +33,11 @@
           opacity: .75
         });
 
+        var midPath = new Path({
+          strokeColor: 'green',
+          opacity: 1
+        });
+
         var amount = 120;
         var step = view.size.height / (amount + 1);
         var flip = true;
@@ -40,10 +45,11 @@
         for (var i = 0; i <= amount; i++) {
           leftPath.add(new Point(0, i * step));
           rightPath.add(new Point(0, i * step));
+          midPath.add(new Point(0, i * step));
         }
 
         var group = new Group({
-          children: [rightPath, leftPath],
+          children: [rightPath, leftPath, midPath],
           transformContent: false,
           strokeWidth: 3,
           strokeJoin: 'round',
@@ -83,6 +89,7 @@
           Math.floor(Math.random() * 100)/100,
           Math.floor(Math.random() * 100)/100,
         ];
+        var rightBands = [0,0,0,0,0,0,0,0,0];
 
         var frame = function () {
           var step = view.size.height / (amount + 1);
@@ -90,7 +97,7 @@
           // leftBands.unshift(Math.floor(Math.random() * 100)/100)
           // rightBands.unshift(Math.floor(Math.random() * 100)/100)
           if (window.data < 0) {
-            leftBands.unshift(window.data/100)
+            leftBands.unshift((-window.data)/100)
             rightBands.unshift(0)
           }
           else {
