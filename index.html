@@ -34,7 +34,7 @@
         });
 
         var midPath = new Path({
-          strokeColor: 'green',
+          strokeColor: 'white',
           opacity: 1
         });
 
@@ -112,7 +112,7 @@
             rightPath.segments[i].point = [-rightBands[i] * scale * (flip ? -1 : 1), i * step];
           }
           leftPath.smooth();
-          rightPath.smooth();
+          // rightPath.smooth();
           group.pivot = [0, leftPath.position.y];
           group.position = view.center;
         }
