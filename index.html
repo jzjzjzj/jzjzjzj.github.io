@@ -1,13 +1,101 @@
 <html>
   <head>
     <script src="BluetoothTerminal.js"></script>
+    <script src="paper.js"></script>
   </head>
   <body>
     <input type="button" value="connect" onclick="connect()">
-    <input type="button" value="send" onclick="send()">
+    <!-- <input type="button" value="send" onclick="send()"> -->
     <input type="button" value="disconnect" onclick="disconnect()">
 
-    <div id="received"></div>
+    <!-- <div id="received"></div> -->
+    
+    <div class="paperscript">
+      <script type="text/paperscript" canvas="canvas-1">
+        var leftPath = new Path({
+            strokeColor: 'black',
+          opacity: .75
+        });
+
+        var rightPath = new Path({
+          strokeColor: 'red',
+          opacity: .75
+        });
+
+        var amount = 120;
+        var step = view.size.height / (amount + 1);
+        var flip = true;
+
+        for (var i = 0; i <= amount; i++) {
+          leftPath.add(new Point(0, i * step));
+          rightPath.add(new Point(0, i * step));
+        }
+
+        var group = new Group({
+          children: [rightPath, leftPath],
+          transformContent: false,
+          strokeWidth: 3,
+          strokeJoin: 'round',
+          strokeCap: 'butt',
+          pivot: leftPath.position,
+          position: view.center
+        });
+
+        function onMouseDown() {
+          flip = !flip;
+        }
+
+        function onKeyDown(event) {
+          if (event.key === 'space')
+            group.fullySelected = !group.fullySelected;
+        }
+
+        var leftBands = [
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+        ];
+        var rightBands = [
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+          Math.floor(Math.random() * 100)/100,
+        ];
+
+        var frame = function () {
+          var step = view.size.height / (amount + 1);
+          var scale = view.size.width / 2.25;
+          leftBands.unshift(Math.floor(Math.random() * 100)/100)
+          rightBands.unshift(Math.floor(Math.random() * 100)/100)
+          if(leftBands.length > amount+6) {leftBands.pop();}
+          if(rightBands.length > amount+1) rightBands.pop()
+          for (var i = 0; i <= amount; i++) {
+            leftPath.segments[i].point = [-leftBands[i] * scale, i * step];
+            rightPath.segments[i].point = [-rightBands[i] * scale * (flip ? -1 : 1), i * step];
+          }
+          leftPath.smooth();
+          rightPath.smooth();
+          group.pivot = [0, leftPath.position.y];
+          group.position = view.center;
+        }
+
+        view.onFrame = frame
+      </script>
+      <div class="canvas">
+        <canvas resize="true" id="canvas-1"></canvas>
+      </div>
+    </div>
 
     <script>
       // Obtain configured instance.
@@ -25,7 +113,7 @@
         if(received.length > 30) received.pop()
 
         received.forEach(d => result += `<div><i>:${d.s}.${d.ms}</i> | <b>${d.data}</b></div>`)
-        document.getElementById('received').innerHTML = result
+        // document.getElementById('received').innerHTML = result
       };
 
       function connect() {
@@ -35,10 +123,10 @@
         });
       }
 
-      function send() {
-        // Send something to the connected device.
-        terminal.send('Simon says: Hello, world!');
-      }
+      // function send() {
+      //   // Send something to the connected device.
+      //   terminal.send('Simon says: Hello, world!');
+      // }
 
       function disconnect() {
         // Disconnect from the connected device.
