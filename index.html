@@ -96,6 +96,7 @@
           // leftBands.unshift(Math.floor(Math.random() * 100)/100)
           // rightBands.unshift(Math.floor(Math.random() * 100)/100)
           if (window.data < 0) {
+FIXME: Normalize the data. Can be 0~600, we need 0-1.
             leftBands.unshift((-window.data)/100)
             rightBands.unshift(0)
           }
