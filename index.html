@@ -98,7 +98,6 @@
             rightBands.unshift(window.data/100)
           }
 
-          (window.data < 0 ? rightBands : leftBands).unshift(0)
           if(leftBands.length > amount+6) {leftBands.pop();}
           if(rightBands.length > amount+1) rightBands.pop()
           for (var i = 0; i <= amount; i++) {
